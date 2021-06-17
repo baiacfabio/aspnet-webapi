@@ -6,15 +6,20 @@ namespace aspnet_webapi.Data
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private IList<UsuarioEntidade> usuarios; 
+        private static List<UsuarioEntidade> usuarios = new List<UsuarioEntidade>(); 
         public UsuarioRepository(IUsuarioFakeHelper usuarioFakeHelper)
         {
-            usuarios = usuarioFakeHelper.CriarUsuariosFake(100).ToList();
+            usuarios.AddRange(usuarioFakeHelper.CriarUsuariosFake(3).ToList());
         }
         
         public IEnumerable<UsuarioEntidade> ListarTodos()
         {
             return usuarios;
+        }
+
+        public UsuarioEntidade ObterPeloId(int id)
+        {
+            return usuarios.FirstOrDefault(x => x.Id == id);
         }
 
         public void Salvar(UsuarioEntidade usuario)
@@ -24,11 +29,11 @@ namespace aspnet_webapi.Data
             }
             else
             {
-                var usuarioParaAlterar = this.usuarios.FirstOrDefault(x => x.Id == usuario.Id);
-                this.usuarios.Remove(usuarioParaAlterar);
+                var usuarioParaAlterar = usuarios.FirstOrDefault(x => x.Id == usuario.Id);
+                usuarios.Remove(usuarioParaAlterar);
             }
             
-            this.usuarios.Add(usuario);
+            usuarios.Add(usuario);
         }
 
         private int ObterProximoId(){
