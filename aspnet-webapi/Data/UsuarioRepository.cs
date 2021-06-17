@@ -15,7 +15,7 @@ namespace aspnet_webapi.Data
         
         public IEnumerable<UsuarioEntidade> ListarTodos()
         {
-            return usuarios;
+            return usuarios.OrderBy(x => x.Id);
         }
 
         public UsuarioEntidade ObterPeloId(int id)
