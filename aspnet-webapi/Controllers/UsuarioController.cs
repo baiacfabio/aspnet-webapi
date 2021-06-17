@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using aspnet_webapi.Models;
+using aspnet_webapi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnet_webapi.Controllers
@@ -8,24 +10,38 @@ namespace aspnet_webapi.Controllers
     [Route("v1/usuarios")]
     public class UsuarioController : ControllerBase
     {
-        [HttpGet]
-        [Route("")]
-        public ActionResult<List<Usuario>> Get()
-        {
-            var usuarios = RetornarUsuariosFake();
+        private readonly IUsuarioService usuarioService;
 
-            return usuarios;
+        public UsuarioController(IUsuarioService usuarioService)
+        {
+            this.usuarioService = usuarioService;
         }
 
-        private static List<Usuario> RetornarUsuariosFake()
+        [HttpGet]
+        [Route("")]
+        public ActionResult<IEnumerable<UsuarioListagem>> Get()
         {
-            return new List<Usuario>
+            var usuarios = usuarioService.ListarTodos();
+
+            return Ok(usuarios);
+        }
+
+        [HttpPost]
+        [Route("")]
+        public ActionResult Post([FromBody]Usuario usuario)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            try
             {
-                new Usuario("Fabio Cezar Baía", "baiacfabio@gmail.com", 31),
-                new Usuario("Stela Massanares Pradella Baía", "stela@email.com", 32),
-                new Usuario("Flavio Sidnei Baía", "flavio@email.com", 28),
-                new Usuario("João José da Silva", "joao@email.com", 25)
-            };
+                usuarioService.Salvar(usuario);
+                return Ok(usuario);//todo: retornar created
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

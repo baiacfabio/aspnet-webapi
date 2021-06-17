@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using aspnet_webapi.Data;
+using aspnet_webapi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,10 @@ namespace aspnet_webapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddTransient<IUsuarioService, UsuarioService>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IUsuarioFakeHelper, UsuarioFakeHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
