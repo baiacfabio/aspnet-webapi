@@ -10,7 +10,8 @@ namespace aspnet_webapi.Data
 
         public UsuarioRepository(IUsuarioFakeHelper usuarioFakeHelper)
         {
-            usuarios.AddRange(usuarioFakeHelper.CriarUsuariosFake(3).ToList());
+            if(!usuarios.Any())
+                usuarios.AddRange(usuarioFakeHelper.CriarUsuariosFake(3).ToList());
         }
         
         public IEnumerable<UsuarioEntidade> ListarTodos()
