@@ -6,12 +6,13 @@ namespace aspnet_webapi.Data
 {
     public class UsuarioRepository : IUsuarioRepository
     {
+        const int QUANTIDADE_INICIAL_USUARIOS = 100;
         private static List<UsuarioEntidade> usuarios = new List<UsuarioEntidade>();
 
         public UsuarioRepository(IUsuarioFakeHelper usuarioFakeHelper)
         {
             if(!usuarios.Any())
-                usuarios.AddRange(usuarioFakeHelper.CriarUsuariosFake(3).ToList());
+                usuarios.AddRange(usuarioFakeHelper.CriarUsuariosFake(QUANTIDADE_INICIAL_USUARIOS).ToList());
         }
         
         public IEnumerable<UsuarioEntidade> ListarTodos()
