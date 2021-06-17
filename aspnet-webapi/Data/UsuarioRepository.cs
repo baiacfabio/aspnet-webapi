@@ -6,7 +6,8 @@ namespace aspnet_webapi.Data
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private static List<UsuarioEntidade> usuarios = new List<UsuarioEntidade>(); 
+        private static List<UsuarioEntidade> usuarios = new List<UsuarioEntidade>();
+
         public UsuarioRepository(IUsuarioFakeHelper usuarioFakeHelper)
         {
             usuarios.AddRange(usuarioFakeHelper.CriarUsuariosFake(3).ToList());
@@ -24,20 +25,13 @@ namespace aspnet_webapi.Data
 
         public void Salvar(UsuarioEntidade usuario)
         {
-            if (usuario.Id == 0){
-                usuario.Id = ObterProximoId();
-            }
-            else
+            if(usuario.Id != 0)
             {
                 var usuarioParaAlterar = usuarios.FirstOrDefault(x => x.Id == usuario.Id);
                 usuarios.Remove(usuarioParaAlterar);
             }
             
             usuarios.Add(usuario);
-        }
-
-        private int ObterProximoId(){
-            return usuarios.Max(x => x.Id) + 1;
         }
     }
 }

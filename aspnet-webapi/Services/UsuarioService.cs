@@ -46,7 +46,7 @@ namespace aspnet_webapi.Services
 
         public void Salvar(Usuario usuario)
         {
-            var usuarioEntidade = new UsuarioEntidade(usuario.Nome, usuario.Email, usuario.DataNascimento);
+            var usuarioEntidade = new UsuarioEntidade(usuario.Id, usuario.Nome, usuario.Email, usuario.DataNascimento);
 
             this.repositorioUsuario.Salvar(usuarioEntidade);
         }

@@ -30,9 +30,15 @@ namespace aspnet_webapi.Controllers
         [Route("{id:int}")]
         public ActionResult<IEnumerable<UsuarioListagem>> Get([FromRoute]int id)
         {
-            var usuario = usuarioService.ObterPeloId(id);
-
-            return Ok(usuario);
+            try
+            {
+                var usuario = usuarioService.ObterPeloId(id);
+                return Ok(usuario);
+            }
+            catch(ArgumentNullException)
+            {
+                return NotFound("Usuário não foi encontrado.");
+            }
         }
 
         [HttpPost]
@@ -46,6 +52,24 @@ namespace aspnet_webapi.Controllers
             {
                 usuarioService.Salvar(usuario);
                 return Ok();//todo: retornar created
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("")]
+        public ActionResult Put([FromBody]Usuario usuario)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            try
+            {
+                usuarioService.Salvar(usuario);
+                return Ok();
             }
             catch(ArgumentException ex)
             {
