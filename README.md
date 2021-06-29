@@ -1,5 +1,7 @@
 # aspnet-webapi
 
+[![Test](https://github.com/baiacfabio/aspnet-webapi/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/baiacfabio/aspnet-webapi/actions/workflows/main.yml)
+
 Exemplo de WEB API com ASPNET Core
 
 Nessa aplicação de exemplo foi exposta uma API para listagem, inclusão e edição de usuários.
