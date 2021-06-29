@@ -11,7 +11,7 @@ jobs:
   build:
   
     env: 
-      CAMINHO_PROJETO: ./aspnet-webapi/aspnet-webapi.csproj
+      CAMINHO_PROJETO: ./aspnet-webapi
     
     runs-on: ubuntu-latest
     
