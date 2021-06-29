@@ -9,24 +9,30 @@ on:
 
 jobs:
   build:
-  
     env: 
       CAMINHO_PROJETO: ./aspnet-webapi
-    
     runs-on: ubuntu-latest
-    
     steps:
       - uses: actions/checkout@v2
-      
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with: 
           dotnet-version: 3.1.402
-          
       - name: Install dependencies
         run: dotnet restore ${{ env.CAMINHO_PROJETO }}
-      
       - name: Build 
         run: dotnet build ${{ env.CAMINHO_PROJETO }} --configuration Release --no-restore
+      - name: Tests 
+        run: dotnet test ${{ env.CAMINHO_PROJETO }} --verbosity minimal
         
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: fabiobaia.com  
+    needs: build
+    steps:
+      - name: Faz de conta q ta fazendo deploy
+        run: echo Deploy DEV
+      
     
