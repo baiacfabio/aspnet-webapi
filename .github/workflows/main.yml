@@ -1,4 +1,4 @@
-name: Test
+name: Build
 
 on:
   pull_request:
@@ -28,3 +28,5 @@ jobs:
       
       - name: Build 
         run: dotnet build ${{ env.CAMINHO_PROJETO }} --configuration Release --no-restore
+        
+    
