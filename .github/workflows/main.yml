@@ -9,13 +9,14 @@ on:
 
 jobs:
   build:
+  
+    env: 
+      CAMINHO_PROJETO: ./aspnet-webapi/aspnet-webapi.csproj
+    
     runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Navega para o diretorio onde esta a solução
-        run: cd aspnet-webapi 
       
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
@@ -23,4 +24,4 @@ jobs:
           dotnet-version: 2.1
       
       - name: Build 
-        run: dotnet build --configuration Release
+        run: dotnet build ${{ env.CAMINHO_PROJETO }} --configuration Release
