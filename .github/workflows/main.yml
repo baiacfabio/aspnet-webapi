@@ -24,7 +24,7 @@ jobs:
           dotnet-version: 3.1.402
           
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ${{ env.CAMINHO_PROJETO }}
       
       - name: Build 
         run: dotnet build ${{ env.CAMINHO_PROJETO }} --configuration Release --no-restore
